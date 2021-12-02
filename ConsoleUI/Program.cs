@@ -2,23 +2,17 @@
 
 using Business.Concrete;
 using DataAccess.EntityFramework;
+using Entities.Concrete;
 
 CarManager carManager = new CarManager(new EfCarDal());
+RentalManager r = new RentalManager(new EfRentalDal());
+Rental rental = new Rental();
+rental.CustomerId=1;
+rental.CarId = 1;
+rental.RentDate= DateTime.Now;
+rental.ReturnDate= DateTime.Now;
+var result = r.Add(rental);
+Console.WriteLine(result.Message);
 
-var result = carManager.GetCarDetails();
-
-if (result.Success == true)
-{
-    foreach (var car in result.Data)
-    {
-
-        Console.WriteLine(car.CarName + " / " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
-    }
-}
-
-else
-{
-    Console.WriteLine(result.Message);
-}
 
 
