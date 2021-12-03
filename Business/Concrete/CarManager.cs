@@ -44,13 +44,13 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour==2)
+            if (DateTime.Now.Hour==7)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
 
             }
 
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.AddedCar);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.ListedCar);
 
         }
 
@@ -76,7 +76,23 @@ namespace Business.Concrete
 
         public IResult Update(Car car)
         {
-            _carDal.Update(car);
+            if (car.Id != null)
+            {
+                Car updatedCar = _carDal.GetById(c => c.Id == car.Id);
+                if(car.ColorId != 0)
+                    updatedCar.ColorId = car.ColorId;
+                if (car.ModelYear != 0)
+                    updatedCar.ModelYear = car.ModelYear;
+                if (car.CarName != "string")
+                    updatedCar.CarName = car.CarName;
+                if (car.BrandId != 0)
+                    updatedCar.BrandId = car.BrandId;
+                if (car.DailyPrice != 0)
+                    updatedCar.DailyPrice = car.DailyPrice;
+                if (car.Description != "string")
+                    updatedCar.Description = car.Description;
+                _carDal.Update(updatedCar);
+            }
             return new SuccessResult(Messages.UpdatedCar);
         }
     }
