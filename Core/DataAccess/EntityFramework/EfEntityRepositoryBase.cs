@@ -22,7 +22,6 @@ namespace Core.DataAccess.EntityFramework
                 addedEntity.State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 context.SaveChanges();
 
-
             }
         }
 
