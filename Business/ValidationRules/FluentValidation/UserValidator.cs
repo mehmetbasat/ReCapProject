@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities.Concrete;
 using Entities.Concrete;
 using FluentValidation;
 
@@ -18,8 +19,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(u => u.Lastname).MinimumLength(2);
             RuleFor(u => u.Email).NotEmpty();
             RuleFor(u => u.Email).MinimumLength(11);
-            RuleFor(u => u.Password).NotEmpty();
-            RuleFor(u => u.Password).MinimumLength(8);
+            RuleFor(u => u.PasswordHash).NotEmpty();
 
         }
     }

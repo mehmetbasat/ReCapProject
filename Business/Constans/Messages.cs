@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,21 +15,21 @@ namespace Business.Constans
         public static string AddedUser = "Kullanıcı eklendi";
         public static string AddedCustomer = "Müşteri eklendi";
         public static string AddedRental = "Kiralama eklendi";
-        internal static string AddedImage = "Resim Eklendi";
+        public static string AddedImage = "Resim Eklendi";
         public static string DeletedCar = "Araba silindi";
         public static string DeletedColor = "Renk silindi";
         public static string DeletedBrand = "Model silindi";
         public static string DeletedUser = "Kullanıcı silindi";
         public static string DeletedCustomer = "Müşteri silindi";
         public static string DeletedRental = "Kiralama silindi";
-        internal static string DeletedImage = "Resim silindi";
+        public static string DeletedImage = "Resim silindi";
         public static string UpdatedCar = "Araba bilgileri güncellendi";
         public static string UpdatedColor = "Renk bilgileri güncellendi";
         public static string UpdatedBrand = "Model bilgileri güncellendi";
         public static string UpdatedUser = "Kullanıcı bilgileri güncellendi";
         public static string UpdatedCustomer = "Müşteri bilgileri güncellendi";
         public static string UpdatedRental = "Kiralama bilgileri güncellendi";
-        internal static string UpdatedImage = "Resim güncellendi";
+        public static string UpdatedImage = "Resim güncellendi";
         public static string CarNameInvalid = "Araba ismi geçersiz";
         public static string UserNameInvalid = "Kullanıcı ismi geçersiz";
         public static string CustomerNameInvalid = "Müşteri ismi geçersiz";
@@ -49,7 +50,8 @@ namespace Business.Constans
         public static string GettedImage = "Resim getirildi";
         public static string MaintenanceTime = "Sistem bakımda";
         public static string ReturnOk = "Araç Teslim Edildi";
-        internal static string PhotoLimitExceeded = "Araç fotoğraf limiti aşıldı";
-        internal static string GettedCarImage = "Araba resmi getirildi";
+        public static string PhotoLimitExceeded = "Araç fotoğraf limiti aşıldı";
+        public static string GettedCarImage = "Araba resmi getirildi";
+        public static string AuthorizationDenied = "Yetkiniz yok";
     }
 }

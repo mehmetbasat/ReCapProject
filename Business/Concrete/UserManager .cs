@@ -1,15 +1,10 @@
 ﻿using Business.Abstract;
 using Business.Constans;
-using Core.Utilities.Result;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
+using Core.Utilities.Result;
+using DataAccess.Abstract;
 
 namespace Business.Concrete
 {
@@ -21,7 +16,7 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-
+        
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
@@ -46,6 +41,16 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<User>(_userDal.GetById(c => c.Id == userId), Messages.GettedUser);
 
+        }
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            return new SuccessDataResult<User>(_userDal.GetById(m=>m.Email==email), "Maile göre getirildi.");
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
 
         public IResult Update(User user)
