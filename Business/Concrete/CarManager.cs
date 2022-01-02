@@ -13,6 +13,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transactional;
 using Core.Aspects.Autofac.Validation;
 using ValidationException = FluentValidation.ValidationException;
 using Core.CrossCuttingConcerns.Validation;
@@ -29,6 +32,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [TransactionScopeAspect]
         public IResult Add(Car car)
         {
             _carDal.Add(car);
@@ -44,6 +48,7 @@ namespace Business.Concrete
 
         }
 
+        [CacheAspect()]
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour==7)
@@ -55,9 +60,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.ListedCar);
 
         }
-
+        [PerformanceAspect(5)]
         public IDataResult<Car> GetById(int carId)
         {
+            Thread.Sleep(5000);
             return new SuccessDataResult<Car>(_carDal.GetById(c => c.Id == carId));
         }
 

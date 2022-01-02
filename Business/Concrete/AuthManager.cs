@@ -34,11 +34,10 @@ namespace Business.Concrete
                 Lastname = userForRegisterDto.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                status = true
+                Status = true
             };
-
             _userService.Add(user);
-            return new SuccessDataResult<User>(user, "Kayıt Oldu");
+            return new SuccessDataResult<User>(user, "Kayıt oldu");
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
@@ -51,7 +50,7 @@ namespace Business.Concrete
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
             {
-                return new ErrorDataResult<User>("Parola hatası");
+                return new ErrorDataResult<User>(userToCheck.Data,"Parola hatası");
             }
 
             return new SuccessDataResult<User>(userToCheck.Data, "Başarılı giriş");
@@ -59,18 +58,17 @@ namespace Business.Concrete
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            if (_userService.GetByMail(email).Data != null)
             {
                 return new ErrorResult("Kullanıcı mevcut");
             }
-
             return new SuccessResult();
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims.Data);
+            var claims = _userService.GetClaims(user).Data;
+            var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, "Token oluşturuldu");
         }
     }
