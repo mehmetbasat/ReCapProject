@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -52,6 +53,11 @@ namespace Business.Concrete
         public IDataResult<Rental> GetById(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.GetById(c => c.Id == rentalId), Messages.GettedRental);
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
         public IResult SetReturnedById(int id)

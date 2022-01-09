@@ -26,7 +26,10 @@ namespace DataAccess.EntityFramework
                                  BrandName = b.Name,
                                  ColorName = a.Name,
                                  DailyPrice = c.DailyPrice,
-                                 CarName = c.CarName
+                                 ModelYear = c.ModelYear,
+                                 CarName = c.CarName,
+                                 Description = c.Description,
+                                 Images = (from i in context.CarImages where i.CarId == c.Id select i.ImagePath).ToList()
 
                              };
 
