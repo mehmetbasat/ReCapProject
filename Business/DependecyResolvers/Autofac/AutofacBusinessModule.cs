@@ -14,7 +14,6 @@ using Core.Interceptors;
 using Castle.DynamicProxy;
 using Core.Utilities.Helper.FileHelper;
 using Core.Utilities.Security.JWT;
-
 namespace Business.DependecyResolvers.Autofac
 {
     public class AutofacBusinessModule : Module
@@ -42,10 +41,17 @@ namespace Business.DependecyResolvers.Autofac
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
 
+            builder.RegisterType<CreditCardManager>().As<ICreditCardService>().SingleInstance();
+            builder.RegisterType<EfCreditCardDal>().As<ICreditCardDal>().SingleInstance();
+
+            builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
+            builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
+
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
-            builder.RegisterType<FileHelper>().As<IFileHelper>().SingleInstance();
+            builder.RegisterType<FileHelper>().As<FileHelper>().SingleInstance();
 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

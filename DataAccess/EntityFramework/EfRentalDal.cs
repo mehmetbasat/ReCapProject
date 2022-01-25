@@ -4,6 +4,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.DTOs;
@@ -12,40 +13,38 @@ namespace DataAccess.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapContext>, IRentalDal
     {
-        public List<Rental> GetCarIdAndReturnDate(int carId, DateTime? returnDate)
+        public List<RentalDetailDto> GetRentalsDetails(Expression<Func<RentalDetailDto, bool>> filter = null)
         {
             using (ReCapContext context = new ReCapContext())
             {
-                var result = from c in context.Rentals where c.CarId == carId && c.ReturnDate == returnDate select c;
-                return result.ToList();
-
-            }
-
-        }
-
-        public List<RentalDetailDto> GetRentalDetails()
-        {
-            using (var context = new ReCapContext())
-            {
                 var result = from r in context.Rentals
-                    join cr in context.Cars
-                        on r.CarId equals cr.Id
-                    join cs in context.Customers
-                        on r.CustomerId equals cs.CustomerId
-                    join br in context.Brands
-                        on cr.BrandId equals br.Id
+                    join c in context.Cars
+                        on r.CarId equals c.Id
+                    join cu in context.Customers
+                        on r.CustomerId equals cu.CustomerId
                     join u in context.Users
-                        on cs.UserId equals u.Id
-
+                        on cu.UserId equals u.Id
+                    join b in context.Brands
+                        on c.BrandId equals b.Id
+                    join p in context.Payments
+                        on r.PaymentId equals p.Id
                     select new RentalDetailDto
                     {
-                        RentalId = r.Id,
-                        BrandName = br.Name,
-                        CustomerName = u.Firstname + " " + u.Lastname,
+                        Id = r.Id,
+                        CarId = c.Id,
+                        ModelFullName = $"{b.Name} {c.CarName}",
+                        CustomerId = cu.CustomerId,
+                        CustomerFullName = $"{u.Firstname} {u.Lastname}",
+                        ReturnDate = r.ReturnDate,
+                        DailyPrice = c.DailyPrice,
                         RentDate = r.RentDate,
-                        ReturnDate = r.ReturnDate
+                        PaymentId = r.PaymentId,
+                        PaymentDate = p.PaymentDate,
+                        DeliveryStatus = r.DeliveryStatus
                     };
-                return result.ToList();
+                return filter == null
+                    ? result.ToList()
+                    : result.Where(filter).ToList();
             }
         }
     }

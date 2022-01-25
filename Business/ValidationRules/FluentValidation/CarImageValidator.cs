@@ -8,11 +8,14 @@ using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class RentalValidator : AbstractValidator<Rental>
+
+    public class CarImageValidator : AbstractValidator<CarImage>
     {
-        public RentalValidator()
+        public CarImageValidator()
         {
-            
+            RuleFor(c => c.CarId).NotEmpty();
+            RuleFor(c => c.CarId).NotEmpty();
+            RuleFor(c => c.CarId).GreaterThan(0);
         }
     }
 }

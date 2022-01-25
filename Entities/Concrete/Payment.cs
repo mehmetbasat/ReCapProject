@@ -7,12 +7,12 @@ using Core.Entities;
 
 namespace Entities.Concrete
 {
-    public class CarImage : IEntity
+    public class Payment : IEntity
     {
         public int Id { get; set; }
-        public int CarId { get; set; }
-        public string ImagePath { get; set; }
-        public DateTime Date { get; set; }
-        
+        public int CreditCardId { get; set; }
+        public int CustomerId { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime PaymentDate { get; set; }
     }
 }
